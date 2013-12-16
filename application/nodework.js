@@ -19,12 +19,15 @@ var http = require('http'),
  * @param {Function} route Routing function to route the url request
  */
 exports.start = function(route) {
-	function onRequest(request, response) {
-		// split the pathname and remove any empty elements
-		var path = url.parse(request.url).pathname.split('/').filter(function(e){return e;})[0],
-            params = url.parse(request.url).pathname.split('/').filter(function(e){return e;}),
-            currentDomain = domain.create();
-        params.splice(0,1);
+	function onRequest(request, response) {		
+		var currentDomain = domain.create();
+        
+        // get the path action and remaining params using split
+        // not sure whether I should really be adding these to the request object
+        request.pathAction = url.parse(request.url).pathname.split('/').filter(function(e){return e;})[0];        
+        request.params = url.parse(request.url).pathname.split('/').filter(function(e){return e;});
+        // remove the path action from the params
+        request.params.splice(0,1);
         // add on error event to gracefully manage uncaught exceptions        
         currentDomain.on('error', function(error) {
             logger.error(error.stack);
@@ -48,12 +51,12 @@ exports.start = function(route) {
         currentDomain.add(response);
         currentDomain.add(request);  
         // if no pathname the set to default page 'index'
-		if(!path) {			
-			path = ['index'];
+		if(!request.pathAction) {			
+			request.pathAction = ['index'];
 		}
 		// send request and path to be routed
 		currentDomain.run(function() {
-		    route(path, params, request, response);
+		    route(request, response);
 		});		
 	}
 	
@@ -62,7 +65,7 @@ exports.start = function(route) {
 	    cluster.fork();
 	    cluster.fork();
 	    // add disconnect event handler to log when the cluster stops
-	    cluster.on('disconnect', function(worker) {
+	    cluster.on('disconnect', function() {
 	       logger.error('Cluster disconnect'); 
 	    });
 	} else {

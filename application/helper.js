@@ -40,7 +40,7 @@ exports.templateHelper = function(modelData, viewData) {
         html += viewData.slice(index, offset).replace(escaper, function(match) { 
             return '\\' + escapes[match]; 
         });
-        // apply diffrerent replace rules depending on the match
+        // inject javascript into html using replace rules depending on the match
         if(evaluate) {
              html += "';\n" + evaluate + "\np+='";
         }
@@ -52,7 +52,7 @@ exports.templateHelper = function(modelData, viewData) {
         return match;
     });
     
-    // rebuild html ready to be rendered
+    // rebuild dynamic html string containing javascript ready to be rendered
     html = "var t,p='',joiner=Array.prototype.join," +
         "print=function(){p+=joiner.call(arguments,'');};\n" +
         html + "';\nreturn p;\n";
@@ -60,6 +60,7 @@ exports.templateHelper = function(modelData, viewData) {
     try {
         // check for syntax errors when rendering the html
         render = new Function('obj', html);
+        // execute the javascript within html to generate final static html string
         html = render.call(modelData);
     } catch(e) {
         // if syntax error exists then return the error instead of the html
