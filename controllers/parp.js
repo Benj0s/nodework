@@ -8,7 +8,7 @@ var template = require('../application/template'),
 exports.build = function(callback) {
     var modelData = {};
     
-    modelData.base = baseModel.getBase();
+    modelData.siteDetails = baseModel.getDetails();
     modelData.parp = parpModel.getParp();   
     modelData.parpList = parpModel.getParpList();
     

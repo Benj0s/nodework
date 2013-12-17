@@ -26,6 +26,8 @@ var logger = require('./logger'),
 
 /**
  * Helper to render dynamic html templates 
+ * 
+ * An adaptation of Underscore's micro templating based on John Resig's implementation
  *  
  * @param {Object} modelData All model data needed for the view
  * @param {String} viewData The raw version of the view

@@ -1,5 +1,11 @@
+/**
+ * Default model common across all controllers 
+ */
+
 'use strict';
 
-exports.getBase = function() {
-    return "Base";
+var config = require('../application/config');
+
+exports.getDetails = function() {
+    return config.details;
 };

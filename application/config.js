@@ -19,3 +19,10 @@ exports.extensions = {
     '.jpg' : 'image/jpeg',
     '.jpeg' : 'image/jpeg'
 };
+
+// object containing cross site information
+exports.details = {
+    'title' : 'NodeWork test site',
+    'heading' : 'NodeWork Test',
+    'subheading' : 'Node.js webserver using MVC style implementation'
+};

@@ -66,7 +66,9 @@ exports.start = function(route) {
 	    cluster.fork();
 	    // add disconnect event handler to log when the cluster stops
 	    cluster.on('disconnect', function() {
-	       logger.error('Cluster disconnect'); 
+	       logger.error('Cluster disconnect');
+	       // create new cluster to replace the disconnected one
+	       cluster.fork();
 	    });
 	} else {
         server = http.createServer(onRequest).listen(8888);
