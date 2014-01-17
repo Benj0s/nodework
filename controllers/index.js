@@ -7,8 +7,8 @@
 
 var fs = require('fs'),
     baseModel = require('../models/base'),
-	template = require('../application/template'),
-	logger = require('../application/logger');
+	template = require('nodework').template,
+	logger = require('nodework').logger;
 
 /**
  * Builds the index html

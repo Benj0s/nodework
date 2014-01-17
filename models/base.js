@@ -4,7 +4,7 @@
 
 'use strict';
 
-var config = require('../application/config');
+var config = require('nodework').config;
 
 exports.getDetails = function() {
     return config.details;

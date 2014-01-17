@@ -1,9 +1,9 @@
 'use strict';
 
-var template = require('../application/template'),
+var template = require('nodework').template,
     baseModel = require('../models/base'),
 	parpModel = require('../models/parp'),
-	logger = require('../application/logger');
+	logger = require('nodework').logger;
 
 exports.build = function(callback) {
     var modelData = {};
