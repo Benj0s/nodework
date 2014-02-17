@@ -6,9 +6,10 @@
 'use strict';
 
 var fs = require('fs'),
-    baseModel = require('../models/base'),
+    globalModel = require('../models/global'),
 	template = require('nodework').template,
-	logger = require('nodework').logger;
+	logger = require('nodework').logger,
+	config = require('nodework').config;
 
 /**
  * Builds the index html
@@ -18,8 +19,8 @@ var fs = require('fs'),
 exports.build = function(callback) {
     var modelData = {};
     
-    modelData.siteDetails = baseModel.getDetails();
-	template.getContents(modelData, 'index', function(data) {
+    modelData.siteDetails = globalModel.getDetails();
+	template.getContents(modelData, 'index', config.defaultLayout, function(data) {
 		callback(data);
 	});	
 };
